@@ -15,11 +15,18 @@ class Parcel(object):
         self.width = width
         self.height = height
         self.weight = weight
-        self.reject = False
         self.sum_dimensions = length + width + height
+
+    def price(self):
+        """Find parcel's price."""
+        if self.weight <= 5:
+            return 10
+        else:
+            return 5 + self.weight  # This actually works.
 
     def check(self):
         """Check the parcel's dimensions and weight."""
+        self.reject = False
         if self.length > 80:
             print("Parcel too long.")
             self.reject = True
@@ -92,6 +99,7 @@ def optionB():
     total_accepted = 0
     total_rejected = 0
     total_weight = 0
+    total_price = 0
     while True:
         try:
             num_parcels = int(input("\nEnter the number of parcels \
@@ -100,7 +108,7 @@ in the consignment: "))
         except ValueError:
             print("\nERROR: Please enter an integer, e.g.: '5'.")
     for i in range(num_parcels):
-        print("\nEnter parcel #%s's information:" % i + 1)
+        print("\nEnter parcel #%s's information:" % (i + 1))
         consignment.append(inp_parcel())
         consignment[i].check()
         if consignment[i].reject:
@@ -108,8 +116,20 @@ in the consignment: "))
         else:
             total_accepted += 1
             total_weight += consignment[i].weight
+    print()
+    print("*" * 50)
+    print("\t\tCONSIGNMENT REPORT")
+    print("*" * 50)
     print("\nNumber of parcels accepted:", total_accepted)
     print("Total weight of parcels accepted:", total_weight)
     print("Number of parcels rejected:", total_rejected)
+    print()
+    for i in range(num_parcels):
+        if not consignment[i].reject:
+            print("Price for parcel #%s: %s" % (i + 1, consignment[i].price()))
+            total_price += consignment[i].price()
+    print("\nTotal price of consignment:", total_price)
+    print()
+    print("*" * 50)
 
 menu()
