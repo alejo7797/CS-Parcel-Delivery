@@ -1,3 +1,26 @@
 # Pseudo-code Version of the Parcel Delivery System.
 
-PRINT "Select an option:"
+
+PROCEDURE Menu
+    PRINT "Select an option:"
+    PRINT
+    PRINT "    A. Check a single parcel"
+    PRINT "    B. Make a consignment"
+    PRINT "    X. Exit"
+    PRINT
+    PRINT "Enter your option:"
+    option <-- USERINPUT
+    IF option = "a" THEN
+        PRINT
+        CALL optionA
+    ENDIF
+    IF option = "b" THEN
+        CALL optionB
+    ENDIF
+    IF option = "x" THEN
+        CALL optionX
+    ENDIF
+    PRINT
+    PRINT "ERROR: Please enter a proper option, e.g.: 'a'."
+    CALL Menu
+ENDPROCEDURE
