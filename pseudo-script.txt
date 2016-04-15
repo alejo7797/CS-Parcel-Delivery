@@ -1,5 +1,12 @@
 # Pseudo-code Version of the Parcel Delivery System.
 
+inp_length <-- 0
+inp_width <-- 0
+inp_height <-- 0
+inp_weight <-- 0
+option <-- 0
+reject <-- 0
+prices <-- []
 
 PROCEDURE Menu
     PRINT "Select an option:"
@@ -23,4 +30,19 @@ PROCEDURE Menu
     PRINT
     PRINT "ERROR: Please enter a proper option, e.g.: 'a'."
     CALL Menu
+ENDPROCEDURE
+
+PROCEDURE Inp_parcel
+    PRINT "Enter the parcel's legth: "
+    inp_length <-- USERINPUT
+    PRINT "Enter the parcel's width: "
+    inp_width <-- USERINPUT
+    PRINT "Enter the parcel's height: "
+    inp_height <-- USERINPUT
+    PRINT "Enter the parcel's weight: "
+    inp_weight <-- USERINPUT
+ENDPROCEDURE
+
+PROCEDURE Check_parcel
+    reject <-- False
 ENDPROCEDURE
