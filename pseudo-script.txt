@@ -1,24 +1,40 @@
-# Pseudo-code Version of the Parcel Delivery System.
+# Pseudo-code version of the Parcel Delivery System.
 
-inp_length <-- 0
-inp_width <-- 0
-inp_height <-- 0
-inp_weight <-- 0
+
+# Initialising some variables.
+length <-- 0
+width <-- 0
+height <-- 0
+weight <-- 0
+sum_dimensions <-- 0
+price <-- 0
 option <-- 0
 reject <-- 0
-prices <-- []
+num_parcels <-- 0
+total_accepted <-- 0
+total_rejected <-- 0
+total_weight <-- 0
+total_price <-- 0
+parcels_accepted <-- []
+prices_accepted <-- []
+
 
 PROCEDURE Menu
+	# Displays a menu giving the possible options to the user.
+	PRINT "" # These empty print commands are used a lot.
+	# They help make the program easier to read.
     PRINT "Select an option:"
-    PRINT
+    PRINT ""
     PRINT "    A. Check a single parcel"
     PRINT "    B. Make a consignment"
     PRINT "    X. Exit"
-    PRINT
+    PRINT ""
     PRINT "Enter your option:"
     option <-- USERINPUT
+	# The user's option is input.
+	# We call a different procedure according to the user's input.
     IF option = "a" THEN
-        PRINT
+        PRINT ""
         CALL optionA
     ENDIF
     IF option = "b" THEN
@@ -27,22 +43,132 @@ PROCEDURE Menu
     IF option = "x" THEN
         CALL optionX
     ENDIF
-    PRINT
+    PRINT ""
     PRINT "ERROR: Please enter a proper option, e.g.: 'a'."
+	# A limitation of the program is no distinction between "a" and "A".
     CALL Menu
+	# If the user's input is invalid we display the menu again.
 ENDPROCEDURE
+
 
 PROCEDURE Inp_parcel
+	# Prompts the user to enter a parcel's information.
     PRINT "Enter the parcel's legth: "
-    inp_length <-- USERINPUT
+    length <-- USERINPUT
     PRINT "Enter the parcel's width: "
-    inp_width <-- USERINPUT
+    width <-- USERINPUT
     PRINT "Enter the parcel's height: "
-    inp_height <-- USERINPUT
+    height <-- USERINPUT
     PRINT "Enter the parcel's weight: "
-    inp_weight <-- USERINPUT
+    weight <-- USERINPUT
+	sum_dimensions <-- legth + width + height
+	IF weight > 5 THEN
+		price <-- 10 + (weight - 5) * 10 * 0.1
+	ELSE
+		price <-- 10
+	ENDIF
+	# The price is calculated according to the parcel's weight.
 ENDPROCEDURE
 
+
 PROCEDURE Check_parcel
+	# Check wether a parcel  should be accepted or rejected.
+	# Display why a parcel is rejected.
     reject <-- False
+	IF length > 80 THEN
+		PRINT "Parcel too long."
+		reject <-- True
+	ENDIF
+	IF width > 80 THEN
+		PRINT "Parcel too wide."
+		reject <-- True
+	ENDIF
+	IF height > 80 THEN
+		PRINT "Parcel too high."
+		reject <-- True
+	ENDIF
+	IF sum_dimensions > 200 THEN
+		PRINT "Parcel too large."
+		reject <-- True
+	ENDIF
+	IF weight < 1 THEN
+		PRINT "Parcel too light."
+		reject <-- True
+	ENDIF
+	IF weight > 10 THEN
+		PRINT "Parcel too heavy."
+		reject <-- True
+	ENDIF
+	IF reject = True THEN
+		PRINT "Parcel rejected."
+	ELSE
+		PRINT "Parcel accepted."
 ENDPROCEDURE
+
+
+PROCEDURE optionA
+	# Simplest procedure. Checks a single parcel the user inputs.
+	CALL Inp_parcel
+	PRINT ""
+	CALL Check_parcel
+ENDPROCEDURE
+
+
+PROCEDURE optionB
+	# Checks a whole consignment of parcels.
+	PRINT ""
+	PRINT "Enter the number of parcels in the consignment:"
+	num_parcels <-- USERINPUT
+	FOR count <-- 0 TO num_parcels - 1 DO:
+		# We iterate through each parcel in the consignment.
+		PRINT ""
+		PRINT "Enter parcel #", count + 1, "'s information:"
+		CALL Inp_parcel
+		CALL Check_parcel
+		# We check each parcel.
+		IF reject = True THEN
+			total_rejected <-- total_rejected + 1
+		ELSE
+			total_accepted <-- total_accepted + 1
+			total_weight <-- total_weight + weight
+			parcels_accepted[total_accepted - 1] <-- count + 1
+			prices_accepted[total_accepted - 1] <-- price
+			# These arrays are used later on.
+			# parcels_accepted contains the numbers of accepted parcels.
+			# e.g.: [2, 6, 7, 9]
+			# prices_accepted contains the prices of these parcels.
+			# e.g.: [16, 17.3, 10, 18.9]
+		ENDIF
+	NEXT count
+	# Once we have run through every parcel we display
+	# certain information to the user in a reprt.
+	PRINT ""
+	PRINT "**************************************************"
+	PRINT "        CONSIGNMENT REPORT"
+	PRINT "**************************************************"
+	PRINT ""
+	PRINT "Number of parcels accepted:", total_accepted
+	PRINT "Total weight of parcels accepted:", total_weight
+	PRINT "Number of parcels rejected:", total_rejected
+	PRINT ""
+	FOR count <-- 0 TO total_accepted - 1 DO:
+		# We run through the parcels that have been accepted
+		PRINT "Price for parcel #", parcels_accepted[count], ":", prices_accepted[count]
+		# We display the price of each.
+		total_price <-- total_price + prices_accepted[count]
+		# We total the prices.
+	NEXT count
+	PRINT ""
+	PRINT "Total price of consignment:", total_price
+	PRINT ""
+	PRINT "**************************************************"
+ENDPROCEDURE
+
+
+PROCEDURE optionX
+	# Here the program is killed.
+	# There is no way of doing so in pseudocode
+ENDPROCEDURE
+
+
+CALL Menu # Of course, we start the program.

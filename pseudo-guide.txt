@@ -1,0 +1,42 @@
+# THE GUIDE TO PSEUDOCODE
+
+
+IF <condition> THEN
+	<code>
+ELSE
+	<code>
+ENDIF
+
+
+CASE <condition> OF
+	A: <code>
+	B: <code>
+OTHERWISE
+	<code>
+ENDCASE
+
+
+WHILE <condition> DO
+	<code>
+ENDWHILE
+
+
+FOR count <-- 0 TO 10:
+	<code>
+NEXT count
+
+
+REPEAT
+	<code>
+UNTIL <condition>
+
+
+PROCEDURE <name>
+	<code>
+ENDPROCEDURE
+
+
+FUNCTION <name> (<atr1>, <atr2>):
+	<code>
+	RETURN <whatever>
+ENDFUNCTION
