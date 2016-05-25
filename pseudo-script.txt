@@ -33,21 +33,15 @@ PROCEDURE Menu
     option <-- USERINPUT
 	# The user's option is input.
 	# We call a different procedure according to the user's input.
-    IF option = "a" THEN
-        PRINT ""
-        CALL optionA
-    ENDIF
-    IF option = "b" THEN
-        CALL optionB
-    ENDIF
-    IF option = "x" THEN
-        CALL optionX
-    ENDIF
-    PRINT ""
-    PRINT "ERROR: Please enter a proper option, e.g.: 'a'."
-	# A limitation of the program is no distinction between "a" and "A".
-    CALL Menu
-	# If the user's input is invalid we display the menu again.
+    CASE option OF
+    	"a": CALL optionA
+    	"b": CALL optionB
+    	"x": CALL optionX
+    OTHERWISE
+    	PRINT ""
+    	PRINT "ERROR: Please enter a proper option, e.g.: 'a'."
+    	CALL Menu
+    ENDCASE
 ENDPROCEDURE
 
 
