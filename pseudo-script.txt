@@ -40,8 +40,8 @@ PROCEDURE Menu
     OTHERWISE
     	PRINT ""
     	PRINT "ERROR: Please enter a proper option, e.g.: 'a'."
-    	CALL Menu
     ENDCASE
+    CALL Menu
 ENDPROCEDURE
 
 
