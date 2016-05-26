@@ -97,6 +97,7 @@ PROCEDURE Check_parcel
 		PRINT "Parcel rejected."
 	ELSE
 		PRINT "Parcel accepted."
+	ENDIF
 ENDPROCEDURE
 
 
