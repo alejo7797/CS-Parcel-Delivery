@@ -1,4 +1,4 @@
-# CS-parcel-delivery
+# cs-parcel-delivery
 
 Python script based on work set on us during Computer Science lessons.
 
